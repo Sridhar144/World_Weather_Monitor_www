@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+  {% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Conditions</title>
+    <link rel="icon" href="{% static '/img/favicon.ico' %}">
+
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@100;400;600;900&family=Montserrat:wght@100;400;600;900&family=Sacramento:wght@100;400;600;900&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    
+    <script src="https://code.jquery.com/jquery-3.7.0.slim.js" integrity="sha256-7GO+jepT9gJe9LB4XFf8snVOjX3iYNb0FHYr5LI1N5c=" crossorigin="anonymous"></script>
+<style>
+  li{
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    font-size: 1.2rem;
+  }
+</style>
+</head>
+<body style="background-color: beige;">
+    <nav class="px-5 navbar navbar-expand-lg bg-dark border-bottom border-bottom-dark">
+               
+        <a class="navbar-brand" href="/" style="font-family: 'Montserrat',sans-serif ; font-weight: 900; color: beige;">Incandescence Weather</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon" style="background-color: beige;"></span>
+        </button>
+        <div class="px-5 collapse navbar-collapse" id="navbarTogglerDemo01">
+          <ul style="font-family: 'Merriweather', serif; font-weight: 600;" class="navbar-nav ms-auto">
+            <li class="nav-item active"data-toggle="tab">
+              <a class="nav-link " href="/" style="color: beige;">Home</a>
+          </li>
+            <li class="pe-2 nav-item">
+                <a class="nav-link " href="#" style="color: beige;">About this Site</a>
+            </li>
+            <li class="nav-item dropdown">
+                <button class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                  Cities
+                </button>
+                <ul id="drop" class="dropdown-menu dropdown-menu-dark">
+                  <li><a class="dropdown-item" onclick="getcity(1)" href="#">Delhi</a></li>
+                  <li><a class="dropdown-item" onclick="getcity(2)" href="#">Chennai</a></li>
+                  <li><a class="dropdown-item" onclick="getcity(3)" href="#">Bangalore</a></li>
+                </ul>
+              </li>
+            <li class="pe-2 nav-item">
+                <a class="nav-link " href="/skills" style="color: beige;">Specialities </a>
+            </li>
+            <li class="pe-2 nav-item">
+              <a class="nav-link " href="/contacts" style="color: beige;">Contact</a>
+          </li>
+        </ul>
+        <form class="d-flex" role="search">
+            <input id="city" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success" type="submit" id="submitted">Search</button>
+          </form> 
+        </div>
+      
+    </nav>
+    <div style="font-family: 'Sacramento', cursive; font-weight: 600;" class="fs-2 my-5 fw-bold text-center" id="digital-clock">
+    </div>
+        <div class="container">
+          <h1 class="my-4 text-center">Weather for <span id="cityName"></span></h1>
+            <main>
+                <div class="row row-cols-1 row-cols-md-2 mb-3 text-center">
+                  <div class="col">
+                    <div class="card mb-4 rounded-3 shadow-sm">
+                      <div class="card-header py-3">
+                        <h4 class="my-0 fw-normal">Temperature</h4>
+                      </div>
+                      <div class="card-body">
+                        <div style="background-image: url('https://media.istockphoto.com/id/637834804/photo/beautiful-landscape-in-four-seasons.webp?b=1&s=170667a&w=0&k=20&c=aLvMqxOA8_p1cmFbsl_xZ7ch0INA_hGC6fc5EgDRwP4=');background-size: cover; background-repeat: no-repeat; background-position: center center;height: 350px;"></div>
+                        <ul class="list-unstyled mt-3 mb-4">
+                          <li>Actual Temperature <span id="temp"></span></li>
+                          <li>Min Temperature <span id="min_temp"></span></li>
+                          <li>Max Temperature <span id="max_temp"></span></li>
+                        </ul>
+                        <button type="button" class="w-100 btn btn-lg btn-outline-primary">Sign up for free</button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="card mb-4 rounded-3 shadow-sm">
+                      <div class="card-header py-3">
+                        <h4 class="my-0 fw-normal">General</h4>
+                      </div>
+                      <div class="card-body">
+                        <div style="background-image: url('https://247wallst.com/wp-content/uploads/2018/07/beautiful-weather-events-thunderstorm-lightning.jpg');background-size: cover; background-repeat: no-repeat; background-position: center center;height: 350px;"></div>
+                        <ul class="list-unstyled mt-3 mb-4">
+                          <li>Feels_like <span id="feels_like"></span></li>                        
+                          <li>Cloud_pct <span id="cloud_pct"></span></li>
+                          <li>Humidity <span id="humidity"></span></li>
+                        </ul>
+                        <button type="button" class="w-100 btn btn-lg btn-outline-primary">Sign up for free</button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="card mb-4 rounded-3 shadow-sm">
+                      <div class="card-header py-3">
+                        <h4 class="my-0 fw-normal">Sun</h4>
+                      </div>
+                      <div class="card-body">
+                        <div style="background-image: url('https://api.time.com/wp-content/uploads/2014/12/nustar-sun-20142.jpg');background-size: cover; background-repeat: no-repeat; background-position: center center;height: 350px;"></div>
+                        <ul class="list-unstyled mt-3 mb-4">
+                          <li>Sunrise <span id="sunrise"></span></li>
+                          <li>Sunset <span id="sunset"></span></li>
+                        </ul>
+                        <button type="button" class="w-100 btn btn-lg btn-primary">Get started</button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="card mb-4 rounded-3 shadow-sm border-primary">
+                      <div class="card-header py-3 text-bg-primary border-primary">
+                        <h4 class="my-0 fw-normal">Wind</h4>
+                      </div>
+                      <div class="card-body">
+                        <div style="background-image: url('https://www.annarbor.com/assets_c/2010/05/Wind%20Turbine%20Blades-thumb-350x230-41417.jpg');background-size: cover; background-repeat: no-repeat; background-position: center center;height: 350px;"></div>
+                        <ul class="list-unstyled mt-3 mb-4">
+                          <li>Wind_degrees <span id="wind_speed"></span></li>
+                          <li>Wind_speed <span id="wind_degrees"></span></li>
+                        </ul>
+                        <button type="button" class="w-100 btn btn-lg btn-primary">Contact us</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+            
+                <h2 class="display-6 text-center mb-4">Weather of other commonly searched cities</h2>
+            
+                <div class="table-responsive">
+                  <table class="table text-center">
+                    <thead>
+                      <tr>
+                        <th style="width: 12%;">Weather conditions</th>
+                        <th style="width: 12%;">Cloud_pct</th>
+                        <th style="width: 12%;">Feels_like</th>
+                        <th style="width: 12%;">Humidity</th>
+                        <th style="width: 12%;">Max_temp</th>
+                        <th style="width: 12%;">Min_temp</th>
+                        <th style="width: 12%;">Sunrise</th>
+                        <th style="width: 12%;">Sunset</th>
+                        <th style="width: 12%;">Temp</th>
+                        <th style="width: 12%;">Wind_degrees</th>
+                        <th style="width: 12%;">Wind_speed</th>
+
+                      </tr>
+
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <th scope="row" class="text-start"><span id="country1"></span></th>
+                        <td><span id="cloud_"></span></td>
+                        <td><span id="feels_"></span></td>
+                        <td><span id="humity"></span></td>
+                        <td><span id="max_tem"></span></td>
+                        <td><span id="min_tem"></span></td>
+                        <td><span id="sunris"></span></td>
+                        <td><span id="sunse"></span> </td>
+                        <td><span id="tem"></span> </td>
+                        <td><span id="win_degrees"></span> </td>
+                        <td><span id="win_speed"></span> </td>
+                      </tr>
+                     
+                      <tr>
+                        <th scope="row" class="text-start"><span id="country2"></span></th>
+                        <td><span id="cloud_ss"></span></td>
+                        <td><span id="feels_ss"></span></td>
+                        <td><span id="humityss"></span></td>
+                        <td><span id="max_temss"></span></td>
+                        <td><span id="min_temss"></span></td>
+                        <td><span id="sunrisss"></span></td>
+                        <td><span id="sunsess"></span></td>
+                        <td><span id="temss"></span></td>
+                        <td><span id="win_degreesss"></span></td>
+                        <td><span id="win_speedss"></span></td>
+                    
+                        
+                      </tr>
+                      <tr>
+                        <th scope="row" class="text-start"><span id="country3"></span></th>
+                        <td><span id="cloud_ssss"></span></td>
+                        <td><span id="feels_ssss"></span></td>
+                        <td><span id="humityssss"></span></td>
+                        <td><span id="max_temssss"></span></td>
+                        <td><span id="min_temssss"></span></td>
+                        <td><span id="sunrisssss"></span></td>
+                        <td><span id="sunsessss"></span></td>
+                        <td><span id="temssss"></span></td>
+                        <td><span id="win_degreesssss"></span></td>
+                        <td><span id="win_speedssss"></span></td>
+                                       
+                      </tr>
+                      <tr>
+                        <th scope="row" class="text-start"><span id="country4"></span></th>
+                        <td><span id="cloudd_ssss"></span></td>
+                        <td><span id="feelss_ssss"></span></td>
+                        <td><span id="humityyssss"></span></td>
+                        <td><span id="max_temmssss"></span></td>
+                        <td><span id="min_temmssss"></span></td>
+                        <td><span id="sunriisssss"></span></td>
+                        <td><span id="sunseessss"></span></td>
+                        <td><span id="temmssss"></span></td>
+                        <td><span id="win_degreeesssss"></span></td>
+                        <td><span id="win_speeddssss"></span></td>
+                        <td><svg class="bi" width="24" height="24"><use xlink:href="#check"></use></svg></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </main>
+        </div>
+    
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+        <script src="{% static 'js/weather.js' %}"></script>
+    <script>
+        function getDateTime() {
+        var now     = new Date(); 
+        var year    = now.getFullYear();
+        var month   = now.getMonth()+1; 
+        var day     = now.getDate();
+        var hour    = now.getHours();
+        var minute  = now.getMinutes();
+        var second  = now.getSeconds(); 
+        if(month.toString().length == 1) {
+             month = '0'+month;
+        }
+        if(day.toString().length == 1) {
+             day = '0'+day;
+        }   
+        if(hour.toString().length == 1) {
+             hour = '0'+hour;
+        }
+        if(minute.toString().length == 1) {
+             minute = '0'+minute;
+        }
+        if(second.toString().length == 1) {
+             second = '0'+second;
+        }   
+        var dateTime ='[' + year+'  /  '+month+'  /  '+day+'    ]  Time  :  '+hour+':'+minute+':'+second;   
+         return dateTime;
+    }
+
+    // example usage: realtime clock
+    setInterval(function(){
+        currentTime = getDateTime();
+        document.getElementById("digital-clock").innerHTML = currentTime;
+    }, 1000);
+    
+    </script>
+      
+      <div class="text-center bottom-container p-3 bg-dark ">
+        <a class="footer-link" href="https://devsnest.in/u/Sridhar">DSA</a>
+        <a class="footer-link" href="https://www.codechef.com/users/nonam">Programmer</a>
+        <a class="footer-link" href="https://www.linkedin.com/in/sridhar-sundar-218905256/">LinkedIn</a>
+    
+        <p class="text-white fw-bolder">© Sridhar Sundar.</p>
+      </div>
+    </body>
+    </html>

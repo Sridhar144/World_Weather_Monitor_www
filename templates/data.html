@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+  {% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Backend data</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@100;400;600;900&family=Montserrat:wght@100;400;600;900&family=Sacramento:wght@100;400;600;900&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
+<script defer src="https://code.jquery.com/jquery-3.7.0.js"></script>
+<script defer src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script defer src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+
+<script src="https://code.jquery.com/jquery-3.7.0.slim.js" integrity="sha256-7GO+jepT9gJe9LB4XFf8snVOjX3iYNb0FHYr5LI1N5c=" crossorigin="anonymous"></script>
+
+<style>
+  body{
+        font-size: 12px;
+      }
+</style>
+</head>
+<body style="background-color: beige;">
+    <nav class="px-5 navbar navbar-expand-lg bg-dark border-bottom border-bottom-dark">
+               
+      <a class="navbar-brand" href="/" style="font-family: 'Montserrat',sans-serif ; font-weight: 900; color: beige;">Incandescence Weather</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon" style="background-color: beige;"></span>
+        </button>
+        <div class="px-5 collapse navbar-collapse" id="navbarTogglerDemo01">
+          <ul style="font-family: 'Merriweather', serif; font-weight: 600;" class="navbar-nav ms-auto">
+            <li class="nav-item active"data-toggle="tab">
+              <a class="nav-link " href="/" style="color: beige;">Home</a>
+          </li>
+            <li class="pe-2 nav-item">
+                <a class="nav-link " href="/about" style="color: beige;">About this Site</a>
+            </li>
+            <li class="nav-item dropdown">
+                <button class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                  Cities
+                </button>
+                <ul id="drop" class="dropdown-menu dropdown-menu-dark">
+                  <li><a class="dropdown-item" onclick="getcity(1)" href="#">Delhi</a></li>
+                  <li><a class="dropdown-item" onclick="getcity(2)" href="#">Chennai</a></li>
+                  <li><a class="dropdown-item" onclick="getcity(3)" href="#">Bangalore</a></li>
+                </ul>
+              </li>
+            <li class="pe-2 nav-item">
+                <a class="nav-link " href="/skills" style="color: beige;">Specialities </a>
+            </li>
+            <li class="pe-2 nav-item">
+              <a class="nav-link " href="/contacts" style="color: beige;">Contact</a>
+          </li>
+        </ul>
+        <form class="d-flex" role="search">
+            <input id="city" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success" type="submit" id="submitted">Search</button>
+          </form> 
+        </div>
+        
+      </nav>
+      <table id="example" class="table table-striped" style="width:100%">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Contact</th>
+                <th>Subject</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+          {% for content in info %} 
+
+            <tr>
+                <td>{{forloop.counter}}</td>
+                <td>{{content.name}}</td>
+                <td>{{content.email}}</td>
+                <td>{{content.phone}}</td>
+                <td>{{content.subject}}</td>
+                <td>{{content.message}}</td>
+            </tr>
+            {% endfor %}
+
+        </tfoot>
+    </table>
+      <div class="text-center fixed-bottom bottom-container p-3 bg-dark ">
+        <a class="footer-link" href="https://devsnest.in/u/Sridhar">DSA</a>
+        <a class="footer-link" href="https://www.codechef.com/users/nonam">Programmer</a>
+        <a class="footer-link" href="https://www.linkedin.com/in/sridhar-sundar-218905256/">LinkedIn</a>
+        
+        <p class="text-white fw-bolder">© Sridhar Sundar.</p>
+      </div>
+  <script>
+    $(document).ready(function()
+    {
+      $('#example').DataTable();
+    });
+  </script>
+    </body>
+    </html>
